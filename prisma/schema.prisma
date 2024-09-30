@@ -1,0 +1,54 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  user_id        String   @id @default(uuid())
+  username       String   @unique
+  email          String   @unique
+  password_hash  String
+  bio            String?
+  profile_picture String?
+  created_at     DateTime @default(now())
+  articles       Article[]
+  comments       Comment[]
+  likes          Like[]
+}
+
+model Article {
+  article_id    String   @id @default(uuid())
+  author_id     String
+  title         String
+  content       String
+  featured_image String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  comments      Comment[]
+  likes         Like[]
+  author        User     @relation(fields: [author_id], references: [user_id])
+}
+
+model Comment {
+  comment_id    String   @id @default(uuid())
+  article_id    String
+  user_id       String
+  comment_text  String
+  created_at    DateTime @default(now())
+  article       Article  @relation(fields: [article_id], references: [article_id])
+  user          User     @relation(fields: [user_id], references: [user_id])
+}
+
+model Like {
+  like_id       String   @id @default(uuid())
+  article_id    String
+  user_id       String
+  created_at    DateTime @default(now())
+  article       Article  @relation(fields: [article_id], references: [article_id])
+  user          User     @relation(fields: [user_id], references: [user_id])
+}

@@ -1,0 +1,16 @@
+{
+  "name": "word-flow-backend",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "prisma": "^3.2.1",
+    "@prisma/client": "^3.2.1"
+  },
+  "scripts": {
+    "start": "node src/server.js"
+  }
+}
